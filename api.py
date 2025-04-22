@@ -3,7 +3,8 @@ import ast
 
 urls = ["/aip2pgaming/api/rl/gw.php", 
         "/aip2pgaming/api/rl/score.php",
-        "/aip2pgaming/api/index.php"]
+        "/aip2pgaming/api/index.php",
+        "/aip2pgaming/api/rl/reset.php"]
 
 id = '3672'
 key = '6f7504789dda4c53374b'
@@ -56,7 +57,7 @@ def enter_world(teamId: str, worldId: str) -> dict:
     return res['state']
 
 def make_move(teamId: str, move: str, worldId: int) -> dict:
-    payload = f"type=move&teamId={teamId}&worldID={worldId}&move={move}"
+    payload = f"type=move&teamId={teamId}&move={move}&worldId={worldId}"
     res = make_post_request(payload, urls[0])
     print(res)
     assert res['code'] == "OK", "make_move"
@@ -67,6 +68,14 @@ def get_score(teamId: str) -> dict:
     res = make_get_request(payload, urls[1])
     print(res)
     assert res['code'] == "OK", 'get_score'
+    return res
+
+
+def reset_team(teamId: str, otp: str):
+    payload = f"teamId={teamId}&otp={otp}"
+    res = make_get_request(payload, urls[3])
+    print(res)
+    assert res['code'] == "OK", "reset_team"
     return res
 
 
@@ -112,8 +121,10 @@ def get_my_team() -> dict:
 
 # create_team("TESTRF")
 # add_team_member(teamId, id)
-get_location(teamId)
-get_runs(teamId, 1)
-# enter_world(teamId, "0")
-get_score(teamId)
-make_move(teamId, "S", 0)
+# get_location(teamId)
+# get_runs(teamId, 1)
+# reset_team(teamId, "5712768807")
+# get_location(teamId)
+# make_move(teamId, "S", 0)
+# enter_world(teamId, "1")
+# make_move(teamId, "S", "1")
